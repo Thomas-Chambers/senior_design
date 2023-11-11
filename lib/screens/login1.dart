@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 
-class login1 extends StatefulWidget {
+class Login1 extends StatefulWidget {
   @override
-  _login1State createState() => _login1State();
+  _LoginState1 createState() => _LoginState1();
 }
 
-class _login1State extends State<login1> {
+class _LoginState1 extends State<Login1> {
   //set up variables for username and password
   String username = '';
   String password = '';
@@ -24,15 +24,16 @@ class _login1State extends State<login1> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: CupertinoTextField(
-              placeholder: 'Username',
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 12),
-              clearButtonMode: OverlayVisibilityMode.editing,
+                placeholder: 'Username',
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 6, vertical: 12),
+                clearButtonMode: OverlayVisibilityMode.editing,
                 onChanged: (value) {
                   setState(() {
                     username = value;
                   });
                 },
-            ),
+              ),
             ),
             const Padding(padding: EdgeInsets.symmetric(vertical: 12)),
             CupertinoTextField(

@@ -13,12 +13,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp(
+    return const CupertinoApp(
       title: 'Flutter Demo',
       theme: CupertinoThemeData(
-          brightness: Brightness.light,
+        brightness: Brightness.light,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -34,7 +34,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> _tabs = [
-    login1(), // see the HomeTab class below
+    Login1(), // see the HomeTab class below
     const WorkoutTab(), // see the WorkoutTab class below
     const ProfileTab() // see the SettingsTab class below
   ];
@@ -50,7 +50,8 @@ class _MyHomePageState extends State<MyHomePage> {
       child: CupertinoTabScaffold(
           tabBar: CupertinoTabBar(
             items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Home'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.dashboard), label: 'Home'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.fitness_center), label: 'Workout'),
               BottomNavigationBarItem(
@@ -61,7 +62,6 @@ class _MyHomePageState extends State<MyHomePage> {
             return _tabs[index];
           }),
       //add a bottom navigation bar
-
     );
   }
 }
