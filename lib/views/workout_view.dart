@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 
-//page that says profile
 class WorkoutView extends StatefulWidget {
   const WorkoutView({Key? key}) : super(key: key);
 
