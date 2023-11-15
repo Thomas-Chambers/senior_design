@@ -14,10 +14,11 @@ class AuthViewModel with ChangeNotifier {
   final _authRepository = AuthRepository();
 
   Future<void> login(context, dynamic dataToBeProvided) async {
-    // handle whatever comes from api
     _authRepository.login(dataToBeProvided).then((value) {
-      setAuthenticated(true);
-      Navigator.of(context).pushNamed(RoutesName.home);
+      if (value == 'success') {
+        setAuthenticated(true);
+        Navigator.of(context).pushNamed(RoutesName.home);
+      }
     }).onError((error, stackTrace) {
       setAuthenticated(false);
       debugPrint(error.toString());
