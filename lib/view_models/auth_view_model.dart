@@ -24,4 +24,16 @@ class AuthViewModel with ChangeNotifier {
       debugPrint(error.toString());
     });
   }
+
+  Future<void> signup(context, dynamic dataToBeProvided) async {
+    _authRepository.signup(dataToBeProvided).then((value) {
+      if (value == 'success') {
+        setAuthenticated(true);
+        Navigator.of(context).pushNamed(RoutesName.home);
+      }
+    }).onError((error, stackTrace) {
+      setAuthenticated(false);
+      debugPrint(error.toString());
+    });
+  }
 }

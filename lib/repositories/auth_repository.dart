@@ -35,4 +35,25 @@ class AuthRepository {
       }
     }
   }
+
+  Future<dynamic> signup(dynamic dataToBeProvided) async {
+    //Check if the given email is a valid one
+    final RegExp regex = RegExp(
+      r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+',
+    );
+    if(!regex.hasMatch(dataToBeProvided["email"])){
+      print("INVALID EMAIL\n");
+      return 'error';
+    }
+    // Check if the given email already exists
+    var userCollection = db.collection(USER_COLLECTION_NAME);
+    var user = await userCollection.findOne(where.eq("email", dataToBeProvided["email"]));
+    if(user != null){
+      print("USER ALREADY EXISTS\n");
+      return 'error';
+    }
+    // Insert document
+    await userCollection.insertOne({"email": dataToBeProvided["email"], "password": dataToBeProvided["password"]});
+    return 'success';
+  }
 }
