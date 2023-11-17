@@ -34,15 +34,31 @@ class _LoginViewState extends State<LoginView> {
               hintText: 'Password',
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              Map data = {
-                'email': _emailController.text,
-                'password': _passwordController.text
-              };
-              _AuthViewModel.login(context, data);
-            },
-            child: const Text('Login'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              ElevatedButton(
+                onPressed: () {
+                  Map data = {
+                    'email': _emailController.text,
+                    'password': _passwordController.text
+                  };
+                  _AuthViewModel.login(context, data);
+                },
+                child: const Text('Login'),
+              ),
+              SizedBox(width: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Map data = {
+                    'email': _emailController.text,
+                    'password': _passwordController.text
+                  };
+                  _AuthViewModel.signup(context, data);
+                },
+                child: const Text('Sign Up'),
+              )
+            ],
           ),
         ],
       ),
