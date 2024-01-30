@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:senior_design/view_models/auth_view_model.dart';
 import 'package:provider/provider.dart';
 
+import 'package:senior_design/view_models/amplify_view_model.dart';
+
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
   @override
@@ -11,7 +13,8 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
-    final _AuthViewModel = Provider.of<AuthViewModel>(context);
+    // final _AuthViewModel = Provider.of<AuthViewModel>(context);
+    final _AmplifyViewModel = Provider.of<AmplifyViewModel>(context);
     final _emailController = TextEditingController();
     final _passwordController = TextEditingController();
 
@@ -37,10 +40,11 @@ class _LoginViewState extends State<LoginView> {
           ElevatedButton(
             onPressed: () {
               Map data = {
+                'username': _emailController.text,
                 'email': _emailController.text,
                 'password': _passwordController.text
               };
-              _AuthViewModel.login(context, data);
+              AmplifyViewModel().signUpUser(context, data);
             },
             child: const Text('Login'),
           ),
