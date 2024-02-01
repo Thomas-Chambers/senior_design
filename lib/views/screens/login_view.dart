@@ -19,8 +19,8 @@ class _LoginViewState extends State<LoginView> {
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: //have text fields for email and password and a button to login
-          Column(
+      body:
+      Column(
         children: [
           TextField(
             controller: _emailController,
@@ -36,10 +36,7 @@ class _LoginViewState extends State<LoginView> {
           ),
           ElevatedButton(
             onPressed: () {
-              Map data = {
-                'email': _emailController.text,
-                'password': _passwordController.text
-              };
+              Map data = {'email': _emailController.text, 'password': _passwordController.text};
               _AuthViewModel.login(context, data);
             },
             child: const Text('Login'),
