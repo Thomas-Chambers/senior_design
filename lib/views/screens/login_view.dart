@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:senior_design/view_models/auth_view_model.dart';
-import 'package:provider/provider.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -11,7 +10,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
-    final _AuthViewModel = Provider.of<AuthViewModel>(context);
+    final _AuthViewModel = AuthViewModel();
     final _emailController = TextEditingController();
     final _passwordController = TextEditingController();
 
