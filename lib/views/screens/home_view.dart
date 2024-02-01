@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:senior_design/views/profile_view.dart';
-import 'package:senior_design/views/workout_view.dart';
+import 'package:senior_design/views/screens/profile_view.dart';
+import 'package:senior_design/views/screens/workout_view.dart';
 import 'package:senior_design/views/screens/dashboard_view.dart';
 
 class HomeView extends StatefulWidget {
