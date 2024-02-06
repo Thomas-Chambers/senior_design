@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:senior_design/view_models/auth_view_model.dart';
 import 'package:provider/provider.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({Key? key}) : super(key: key);
+class SignInView extends StatefulWidget {
+  const SignInView({Key? key}) : super(key: key);
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<SignInView> createState() => _SignInViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _SignInViewState extends State<SignInView> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
 
@@ -32,6 +32,16 @@ class _LoginViewState extends State<LoginView> {
     final authViewModel = Provider.of<AuthViewModel>(context);
 
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(), // This line will handle the back navigation
+        ),
+        // title: Text('Sign In'), // Optionally, you can also add a title here
+        elevation: 0, // Removes the shadow under the app bar.
+        backgroundColor: Colors.transparent, // Sets the AppBar background color to transparent
+        foregroundColor: Theme.of(context).primaryColor, // Sets the icon color
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -43,7 +53,7 @@ class _LoginViewState extends State<LoginView> {
               'Sign in to Account',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 42.0,
+                fontSize: 32.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
