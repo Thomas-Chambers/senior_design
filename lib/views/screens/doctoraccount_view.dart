@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:senior_design/view_models/auth_view_model.dart';
+import 'package:senior_design/views/widgets/background.dart';
 
 class DoctorAccountView extends StatefulWidget {
   const DoctorAccountView({Key? key}) : super(key: key);
@@ -47,69 +48,95 @@ class _DoctorAccountViewState extends State<DoctorAccountView> {
     final authViewModel = Provider.of<AuthViewModel>(context);
 
     return Scaffold(
+      extendBodyBehindAppBar: true, // Make body extend behind AppBar
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
+        title: Text('Back'), // Optionally, you can also add a title here
+        // align the title to the right of the icon
+        centerTitle: false,
+        titleSpacing: 0,
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        foregroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Colors.transparent, // Ensure AppBar is transparent
+        foregroundColor: Colors.black, // Set icon color
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: 60.0), // Space at the top
-              const Text(
-                'Enter Doctor Information',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 32.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 40.0),
-              buildTextField(_hospitalNameController, 'Hospital Name', TextInputType.text),
-              buildTextField(_addressController, 'Address', TextInputType.streetAddress),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: buildTextField(_cityController, 'City', TextInputType.text),
+      body: BackgroundImage(
+        child: Padding(
+          padding: const EdgeInsets.only(
+              top: kToolbarHeight + 20.0,
+              left: 20.0,
+              right: 20.0,
+              bottom: 20.0),
+          child: SingleChildScrollView(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(height: 100.0), // Space at the top
+                  const Text(
+                    'Enter Doctor Information',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 32.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  const SizedBox(width: 12.0),
-                  Expanded(
-                    child: buildTextField(_stateController, 'State', TextInputType.text),
+                  const SizedBox(height: 40.0),
+                  buildTextField(_hospitalNameController, 'Hospital Name',
+                      TextInputType.text),
+                  buildTextField(_addressController, 'Address',
+                      TextInputType.streetAddress),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: buildTextField(
+                            _cityController, 'City', TextInputType.text),
+                      ),
+                      const SizedBox(width: 12.0),
+                      Expanded(
+                        child: buildTextField(
+                            _stateController, 'State', TextInputType.text),
+                      ),
+                    ],
                   ),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: buildTextField(_zipCodeController, 'Zip Code',
+                            TextInputType.number),
+                      ),
+                      const SizedBox(width: 12.0),
+                      Expanded(
+                        child: buildTextField(_floorRoomController,
+                            'Floor/Room', TextInputType.text),
+                      ),
+                    ],
+                  ),
+                  buildTextField(_specializationController, 'Specialization',
+                      TextInputType.text),
+                  const SizedBox(height: 24.0),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Logic to handle doctor information submission
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Text('Create Account',
+                          style: TextStyle(fontSize: 18)),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24.0), // Space at the bottom
                 ],
               ),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: buildTextField(_zipCodeController, 'Zip Code', TextInputType.number),
-                  ),
-                  const SizedBox(width: 12.0),
-                  Expanded(
-                    child: buildTextField(_floorRoomController, 'Floor/Room', TextInputType.text),
-                  ),
-                ],
-              ),
-              buildTextField(_specializationController, 'Specialization', TextInputType.text),
-              const SizedBox(height: 24.0),
-              ElevatedButton(
-                onPressed: () {
-                  // Logic to handle doctor information submission
-                },
-                child: const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text('Create Account', style: TextStyle(fontSize: 18)),
-                ),
-              ),
-              const SizedBox(height: 24.0), // Space at the bottom
-            ],
+            ),
           ),
         ),
       ),
@@ -117,11 +144,11 @@ class _DoctorAccountViewState extends State<DoctorAccountView> {
   }
 
   Widget buildTextField(
-      TextEditingController controller,
-      String labelText,
-      TextInputType keyboardType, {
-        int? maxLines = 1,
-      }) {
+    TextEditingController controller,
+    String labelText,
+    TextInputType keyboardType, {
+    int? maxLines = 1,
+  }) {
     return Column(
       children: [
         TextField(

@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:senior_design/view_models/auth_view_model.dart';
 import 'package:senior_design/utils/routes/routes_name.dart';
+import 'package:senior_design/views/widgets/background.dart';
 
 class CreateAccountView extends StatefulWidget {
   const CreateAccountView({Key? key}) : super(key: key);
@@ -42,24 +44,33 @@ class _CreateAccountViewState extends State<CreateAccountView> {
     final authViewModel = Provider.of<AuthViewModel>(context);
 
     return Scaffold(
+      extendBodyBehindAppBar: true, // Make body extend behind AppBar
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(), // This line will handle the back navigation
+          onPressed: () => Navigator.of(context)
+              .pop(), // This line will handle the back navigation
         ),
-        // title: Text('Sign In'), // Optionally, you can also add a title here
+        title: Text('Back'), // Optionally, you can also add a title here
+        // align the title to the right of the icon
+        centerTitle: false,
+        titleSpacing: 0,
         elevation: 0, // Removes the shadow under the app bar.
-        backgroundColor: Colors.transparent, // Sets the AppBar background color to transparent
-        foregroundColor: Theme.of(context).primaryColor, // Sets the icon color
+        backgroundColor: Colors
+            .transparent, // Sets the AppBar background color to transparent
+        foregroundColor: Colors.black, // Sets the icon color
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: SingleChildScrollView( // Use SingleChildScrollView to avoid overflow when keyboard appears
+      body: BackgroundImage(
+          child: Padding(
+        padding: const EdgeInsets.only(
+            top: kToolbarHeight + 20.0, left: 20.0, right: 20.0, bottom: 20.0),
+        child: SingleChildScrollView(
+          // Use SingleChildScrollView to avoid overflow when keyboard appears
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 60.0), // Space at the top
+              const SizedBox(height: 120.0), // Space at the top
               const Text(
                 'Create Account',
                 textAlign: TextAlign.center,
@@ -69,50 +80,30 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                 ),
               ),
               const SizedBox(height: 40.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 6.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            _selectedRole = 'Patient';
-                          });
-                          // Handle Patient button press
-                        },
-                        child: const Text('Patient'),
-                        style: ElevatedButton.styleFrom(
-                          primary: _selectedRole == 'Patient'
-                              ? Theme.of(context).primaryColor
-                              : Colors.grey.shade300,
-                          padding: const EdgeInsets.symmetric(vertical: 16.0),
-                        ),
-                      ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: CupertinoSegmentedControl<String>(
+                  children: {
+                    'Patient': Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: Text('Patient'),
                     ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 6.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            _selectedRole = 'Doctor';
-                          });
-                          // Handle Doctor button press
-                        },
-                        child: const Text('Doctor'),
-                        style: ElevatedButton.styleFrom(
-                          primary: _selectedRole == 'Doctor'
-                              ? Theme.of(context).primaryColor
-                              : Colors.grey.shade300,
-                          padding: const EdgeInsets.symmetric(vertical: 16.0),
-                        ),
-                      ),
+                    'Doctor': Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: Text('Doctor'),
                     ),
-                  ),
-                ],
+                  },
+                  onValueChanged: (String value) {
+                    setState(() {
+                      _selectedRole = value;
+                    });
+                  },
+                  groupValue: _selectedRole,
+                  borderColor: Theme.of(context).primaryColor,
+                  selectedColor: Theme.of(context).primaryColor,
+                  unselectedColor: Colors.grey.shade300,
+                  pressedColor: Theme.of(context).primaryColor.withOpacity(0.2),
+                ),
               ),
               const SizedBox(height: 24.0),
               TextField(
@@ -174,12 +165,17 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                   padding: EdgeInsets.all(16.0),
                   child: Text('Next', style: TextStyle(fontSize: 18)),
                 ),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
               ),
               const SizedBox(height: 24.0), // Space at the bottom
             ],
           ),
         ),
-      ),
+      )),
     );
   }
 }

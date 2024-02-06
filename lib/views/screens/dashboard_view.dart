@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:senior_design/views/widgets/background.dart';
+import 'package:senior_design/views/widgets/background1.dart';
 import 'package:senior_design/views/widgets/graph.dart';
 import 'package:senior_design/views/widgets/recent_activity.dart';
 import 'package:senior_design/views/widgets/calendar.dart';
@@ -17,11 +19,14 @@ class _DashboardViewState extends State<DashboardView> {
     // Format the current date
 
     return Scaffold(
-      body: SafeArea( // Use SafeArea to ensure content is not hidden behind status bars or notches
+      body: BackgroundImage1(
+        // Use SafeArea to ensure content is not hidden behind status bars or notches
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // insert a space between the top of the screen and the content
+              SizedBox(height: 50),
               DashboardHeader(),
               RecentActivity(),
               CalendarWidget(),
