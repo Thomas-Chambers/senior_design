@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:senior_design/view_models/auth_view_model.dart';
 import 'package:senior_design/utils/routes/routes_name.dart';
-import 'package:senior_design/views/widgets/background.dart';
+import 'package:senior_design/views/widgets/backgrounds/background.dart';
+import 'package:senior_design/views/widgets/backgrounds/background_name.dart';
+
 
 class WelcomeView extends StatefulWidget {
   const WelcomeView({Key? key}) : super(key: key);
@@ -18,6 +20,7 @@ class _WelcomeViewState extends State<WelcomeView> {
 
     return Scaffold(
       body: BackgroundImage(
+        imagePath: BackgroundName.loginBackground,
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(

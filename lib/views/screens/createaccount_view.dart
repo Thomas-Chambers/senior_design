@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:senior_design/view_models/auth_view_model.dart';
 import 'package:senior_design/utils/routes/routes_name.dart';
-import 'package:senior_design/views/widgets/background.dart';
+import 'package:senior_design/views/widgets/backgrounds/background.dart';
+import 'package:senior_design/views/widgets/backgrounds/background_name.dart';
 
 class CreateAccountView extends StatefulWidget {
   const CreateAccountView({Key? key}) : super(key: key);
@@ -61,6 +62,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
         foregroundColor: Colors.black, // Sets the icon color
       ),
       body: BackgroundImage(
+          imagePath: BackgroundName.loginBackground,
           child: Padding(
         padding: const EdgeInsets.only(
             top: kToolbarHeight + 20.0, left: 20.0, right: 20.0, bottom: 20.0),

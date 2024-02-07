@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:senior_design/views/widgets/background.dart';
-import 'package:senior_design/views/widgets/background1.dart';
+import 'package:senior_design/views/widgets/backgrounds/background.dart';
+import 'package:senior_design/views/widgets/backgrounds/background_name.dart';
 import 'package:senior_design/views/widgets/graph.dart';
 import 'package:senior_design/views/widgets/recent_activity.dart';
 import 'package:senior_design/views/widgets/calendar.dart';
@@ -19,7 +19,8 @@ class _DashboardViewState extends State<DashboardView> {
     // Format the current date
 
     return Scaffold(
-      body: BackgroundImage1(
+      body: BackgroundImage(
+        imagePath: BackgroundName.pageBackground,
         // Use SafeArea to ensure content is not hidden behind status bars or notches
         child: SingleChildScrollView(
           child: Column(

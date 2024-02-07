@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:senior_design/view_models/auth_view_model.dart';
-import 'package:senior_design/views/widgets/background.dart';
+import 'package:senior_design/views/widgets/backgrounds/background.dart';
+import 'package:senior_design/views/widgets/backgrounds/background_name.dart';
+
 
 class SignInView extends StatefulWidget {
   const SignInView({Key? key}) : super(key: key);
@@ -48,6 +50,7 @@ class _SignInViewState extends State<SignInView> {
         foregroundColor: Colors.black, // Set icon color
       ),
       body: BackgroundImage(
+        imagePath: BackgroundName.loginBackground,
         child: Padding(
           padding: const EdgeInsets.only(
               top: kToolbarHeight + 20.0,
