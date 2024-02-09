@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:senior_design/view_models/auth_view_model.dart';
 import 'package:senior_design/views/widgets/backgrounds/background.dart';
 import 'package:senior_design/views/widgets/backgrounds/background_name.dart';
+import 'package:senior_design/view_models/user_view_model.dart';
 
 class SignInView extends StatefulWidget {
   const SignInView({Key? key}) : super(key: key);
@@ -32,6 +33,7 @@ class _SignInViewState extends State<SignInView> {
   @override
   Widget build(BuildContext context) {
     final authViewModel = Provider.of<AuthViewModel>(context);
+    final userViewModel = Provider.of<UserViewModel>(context);
 
     return Scaffold(
       extendBodyBehindAppBar: true, // Make body extend behind AppBar
@@ -94,9 +96,11 @@ class _SignInViewState extends State<SignInView> {
               const SizedBox(height: 24.0),
               ElevatedButton(
                 onPressed: () {
-                  authViewModel.signIn(context,
-                      email: _emailController.text,
-                      password: _passwordController.text
+                  authViewModel.signIn(
+                    context,
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                    userViewModel: userViewModel,
                   );
                 },
                 child: const Padding(

@@ -129,13 +129,14 @@ class CreateAccountView extends HookWidget {
                         firstNameController.text,
                         lastNameController.text,
                         emailController.text,
-                        passwordController.text,
                         isPatientState.value,
                       );
-                      authViewModel.createAccount(context,
+                      authViewModel.createAccount(
+                        context,
                         email: emailController.text,
                         password: passwordController.text,
-                        isPatient: userViewModel.user.isPatient
+                        isPatient: userViewModel.user.isPatient,
+                        userViewModel: userViewModel,
                       );
                     },
                     child: const Padding(
