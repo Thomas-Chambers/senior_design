@@ -18,6 +18,40 @@ class DoctorAccountView extends HookWidget {
     final zipCodeController = useTextEditingController();
     final floorRoomController = useTextEditingController();
     final specializationController = useTextEditingController();
+    final disableButton = useState(true);
+
+    useEffect(() {
+      void checkFields() {
+        if (hospitalNameController.text.isNotEmpty &&
+            addressController.text.isNotEmpty &&
+            cityController.text.isNotEmpty &&
+            stateController.text.isNotEmpty &&
+            zipCodeController.text.isNotEmpty &&
+            floorRoomController.text.isNotEmpty &&
+            specializationController.text.isNotEmpty) {
+          disableButton.value = false;
+        } else {
+          disableButton.value = true;
+        }
+      }
+
+      hospitalNameController.addListener(checkFields);
+      addressController.addListener(checkFields);
+      cityController.addListener(checkFields);
+      stateController.addListener(checkFields);
+      zipCodeController.addListener(checkFields);
+      floorRoomController.addListener(checkFields);
+      specializationController.addListener(checkFields);
+      return () {
+        hospitalNameController.removeListener(checkFields);
+        addressController.removeListener(checkFields);
+        cityController.removeListener(checkFields);
+        stateController.removeListener(checkFields);
+        zipCodeController.removeListener(checkFields);
+        floorRoomController.removeListener(checkFields);
+        specializationController.removeListener(checkFields);
+      };
+    });
 
     return Scaffold(
       extendBodyBehindAppBar: true, // Make body extend behind AppBar
@@ -92,18 +126,20 @@ class DoctorAccountView extends HookWidget {
                       TextInputType.text),
                   const SizedBox(height: 24.0),
                   ElevatedButton(
-                    onPressed: () {
-                      // Logic to handle doctor information submission
-                      userViewModel.setDoctorInfo(
-                        hospitalNameController.text,
-                        addressController.text,
-                        cityController.text,
-                        stateController.text,
-                        zipCodeController.text,
-                        floorRoomController.text,
-                        specializationController.text,
-                      );
-                    },
+                    onPressed: disableButton.value
+                        ? null
+                        : () {
+                            // Logic to handle doctor information submission
+                            userViewModel.setDoctorInfo(
+                              hospitalNameController.text,
+                              addressController.text,
+                              cityController.text,
+                              stateController.text,
+                              zipCodeController.text,
+                              floorRoomController.text,
+                              specializationController.text,
+                            );
+                          },
                     child: const Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Text('Create Account',
