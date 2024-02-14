@@ -4,6 +4,7 @@ import 'package:senior_design/view_models/auth_view_model.dart';
 import 'package:senior_design/views/widgets/backgrounds/background.dart';
 import 'package:senior_design/views/widgets/backgrounds/background_name.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:senior_design/view_models/user_view_model.dart';
 
 class SignInView extends HookWidget {
   const SignInView({super.key});
@@ -11,6 +12,7 @@ class SignInView extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final authViewModel = Provider.of<AuthViewModel>(context);
+    final userViewModel = Provider.of<UserViewModel>(context);
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
     final disableButton = useState(true);
@@ -96,9 +98,12 @@ class SignInView extends HookWidget {
                 onPressed: disableButton.value
                     ? null
                     : () {
-                        authViewModel.signIn(context,
-                            email: emailController.text,
-                            password: passwordController.text);
+                        authViewModel.signIn(
+                          context,
+                          email: emailController.text,
+                          password: passwordController.text,
+                          userViewModel: userViewModel,
+                        );
                       },
                 child: const Padding(
                   padding: EdgeInsets.all(16.0),

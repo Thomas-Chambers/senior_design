@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:senior_design/views/widgets/backgrounds/background.dart';
 import 'package:senior_design/views/widgets/backgrounds/background_name.dart';
 import 'package:senior_design/view_models/user_view_model.dart';
+import 'package:senior_design/utils/routes/routes_name.dart';
 
 class DoctorAccountView extends HookWidget {
   const DoctorAccountView({Key? key}) : super(key: key);
@@ -139,6 +140,8 @@ class DoctorAccountView extends HookWidget {
                               floorRoomController.text,
                               specializationController.text,
                             );
+                            userViewModel.updateUserInFireStore();
+                            Navigator.pushNamed(context, RoutesName.home);
                           },
                     child: const Padding(
                       padding: EdgeInsets.all(16.0),

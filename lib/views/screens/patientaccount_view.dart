@@ -4,6 +4,7 @@ import 'package:senior_design/views/widgets/backgrounds/background.dart';
 import 'package:senior_design/views/widgets/backgrounds/background_name.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:senior_design/view_models/user_view_model.dart';
+import 'package:senior_design/utils/routes/routes_name.dart';
 
 class PatientAccountView extends HookWidget {
   const PatientAccountView({Key? key}) : super(key: key);
@@ -143,6 +144,8 @@ class PatientAccountView extends HookWidget {
                             dateOfInjuryController.text,
                             pastInjuriesController.text,
                           );
+                          userViewModel.updateUserInFireStore();
+                          Navigator.pushNamed(context, RoutesName.home);
                         },
                   child: const Padding(
                     padding: EdgeInsets.all(16.0),
