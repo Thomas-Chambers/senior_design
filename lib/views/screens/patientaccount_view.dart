@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:senior_design/view_models/auth_view_model.dart';
 import 'package:senior_design/views/widgets/backgrounds/background.dart';
 import 'package:senior_design/views/widgets/backgrounds/background_name.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -19,6 +18,40 @@ class PatientAccountView extends HookWidget {
     final injuryTypeController = useTextEditingController();
     final dateOfInjuryController = useTextEditingController();
     final pastInjuriesController = useTextEditingController();
+    final disableButton = useState(true);
+
+    useEffect(() {
+      void checkFields() {
+        if (dateOfBirthController.text.isNotEmpty &&
+            genderController.text.isNotEmpty &&
+            weightController.text.isNotEmpty &&
+            heightController.text.isNotEmpty &&
+            injuryTypeController.text.isNotEmpty &&
+            dateOfInjuryController.text.isNotEmpty &&
+            pastInjuriesController.text.isNotEmpty) {
+          disableButton.value = false;
+        } else {
+          disableButton.value = true;
+        }
+      }
+
+      dateOfBirthController.addListener(checkFields);
+      genderController.addListener(checkFields);
+      weightController.addListener(checkFields);
+      heightController.addListener(checkFields);
+      injuryTypeController.addListener(checkFields);
+      dateOfInjuryController.addListener(checkFields);
+      pastInjuriesController.addListener(checkFields);
+      return () {
+        dateOfBirthController.removeListener(checkFields);
+        genderController.removeListener(checkFields);
+        weightController.removeListener(checkFields);
+        heightController.removeListener(checkFields);
+        injuryTypeController.removeListener(checkFields);
+        dateOfInjuryController.removeListener(checkFields);
+        pastInjuriesController.removeListener(checkFields);
+      };
+    });
 
     return Scaffold(
       extendBodyBehindAppBar: true, // Make body extend behind AppBar
@@ -97,18 +130,20 @@ class PatientAccountView extends HookWidget {
                 ),
                 const SizedBox(height: 24.0),
                 ElevatedButton(
-                  onPressed: () {
-                    // Logic to handle patient information submission
-                    userViewModel.setPatientInfo(
-                      dateOfBirthController.text,
-                      genderController.text,
-                      weightController.text,
-                      heightController.text,
-                      injuryTypeController.text,
-                      dateOfInjuryController.text,
-                      pastInjuriesController.text,
-                    );
-                  },
+                  onPressed: disableButton.value
+                      ? null
+                      : () {
+                          // Logic to handle patient information submission
+                          userViewModel.setPatientInfo(
+                            dateOfBirthController.text,
+                            genderController.text,
+                            weightController.text,
+                            heightController.text,
+                            injuryTypeController.text,
+                            dateOfInjuryController.text,
+                            pastInjuriesController.text,
+                          );
+                        },
                   child: const Padding(
                     padding: EdgeInsets.all(16.0),
                     child:

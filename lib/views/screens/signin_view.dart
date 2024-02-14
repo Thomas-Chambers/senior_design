@@ -3,35 +3,35 @@ import 'package:provider/provider.dart';
 import 'package:senior_design/view_models/auth_view_model.dart';
 import 'package:senior_design/views/widgets/backgrounds/background.dart';
 import 'package:senior_design/views/widgets/backgrounds/background_name.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class SignInView extends StatefulWidget {
-  const SignInView({Key? key}) : super(key: key);
-
-  @override
-  State<SignInView> createState() => _SignInViewState();
-}
-
-class _SignInViewState extends State<SignInView> {
-  late TextEditingController _emailController;
-  late TextEditingController _passwordController;
-
-  @override
-  void initState() {
-    super.initState();
-    _emailController = TextEditingController();
-    _passwordController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
+class SignInView extends HookWidget {
+  const SignInView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final authViewModel = Provider.of<AuthViewModel>(context);
+    final emailController = useTextEditingController();
+    final passwordController = useTextEditingController();
+    final disableButton = useState(true);
+
+    useEffect(() {
+      void checkFields() {
+        if (emailController.text.isNotEmpty &&
+            passwordController.text.isNotEmpty) {
+          disableButton.value = false;
+        } else {
+          disableButton.value = true;
+        }
+      }
+
+      emailController.addListener(checkFields);
+      passwordController.addListener(checkFields);
+      return () {
+        emailController.removeListener(checkFields);
+        passwordController.removeListener(checkFields);
+      };
+    });
 
     return Scaffold(
       extendBodyBehindAppBar: true, // Make body extend behind AppBar
@@ -72,7 +72,7 @@ class _SignInViewState extends State<SignInView> {
               ),
               const SizedBox(height: 24.0),
               TextField(
-                controller: _emailController,
+                controller: emailController,
                 decoration: const InputDecoration(
                   labelText: 'Email Address',
                   border: OutlineInputBorder(),
@@ -82,7 +82,7 @@ class _SignInViewState extends State<SignInView> {
               ),
               const SizedBox(height: 12.0),
               TextField(
-                controller: _passwordController,
+                controller: passwordController,
                 decoration: const InputDecoration(
                   labelText: 'Password',
                   border: OutlineInputBorder(),
@@ -93,12 +93,13 @@ class _SignInViewState extends State<SignInView> {
               ),
               const SizedBox(height: 24.0),
               ElevatedButton(
-                onPressed: () {
-                  authViewModel.signIn(context,
-                      email: _emailController.text,
-                      password: _passwordController.text
-                  );
-                },
+                onPressed: disableButton.value
+                    ? null
+                    : () {
+                        authViewModel.signIn(context,
+                            email: emailController.text,
+                            password: passwordController.text);
+                      },
                 child: const Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Text('Sign in', style: TextStyle(fontSize: 18)),

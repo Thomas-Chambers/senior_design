@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:senior_design/utils/routes/routes_name.dart';
 import 'package:senior_design/views/widgets/backgrounds/background.dart';
 import 'package:senior_design/views/widgets/backgrounds/background_name.dart';
 import 'package:senior_design/view_models/user_view_model.dart';
@@ -20,6 +19,31 @@ class CreateAccountView extends HookWidget {
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
     final isPatientState = useState(true);
+    final disableButton = useState(true);
+
+    useEffect(() {
+      void checkFields() {
+        if (firstNameController.text.isNotEmpty &&
+            lastNameController.text.isNotEmpty &&
+            emailController.text.isNotEmpty &&
+            passwordController.text.isNotEmpty) {
+          disableButton.value = false;
+        } else {
+          disableButton.value = true;
+        }
+      }
+
+      firstNameController.addListener(checkFields);
+      lastNameController.addListener(checkFields);
+      emailController.addListener(checkFields);
+      passwordController.addListener(checkFields);
+      return () {
+        firstNameController.removeListener(checkFields);
+        lastNameController.removeListener(checkFields);
+        emailController.removeListener(checkFields);
+        passwordController.removeListener(checkFields);
+      };
+    });
 
     return Scaffold(
       extendBodyBehindAppBar: true, // Make body extend behind AppBar
@@ -124,20 +148,21 @@ class CreateAccountView extends HookWidget {
                   ),
                   const SizedBox(height: 24.0),
                   ElevatedButton(
-                    onPressed: () {
-                      userViewModel.setAccountInfo(
-                        firstNameController.text,
-                        lastNameController.text,
-                        emailController.text,
-                        passwordController.text,
-                        isPatientState.value,
-                      );
-                      authViewModel.createAccount(context,
-                        email: emailController.text,
-                        password: passwordController.text,
-                        isPatient: userViewModel.user.isPatient
-                      );
-                    },
+                    onPressed: disableButton.value
+                        ? null
+                        : () {
+                            userViewModel.setAccountInfo(
+                              firstNameController.text,
+                              lastNameController.text,
+                              emailController.text,
+                              passwordController.text,
+                              isPatientState.value,
+                            );
+                            authViewModel.createAccount(context,
+                                email: emailController.text,
+                                password: passwordController.text,
+                                isPatient: userViewModel.user.isPatient);
+                          },
                     child: const Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Text('Next', style: TextStyle(fontSize: 18)),
