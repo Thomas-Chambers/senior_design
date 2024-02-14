@@ -4,7 +4,6 @@ import 'package:senior_design/view_models/auth_view_model.dart';
 import 'package:senior_design/views/widgets/backgrounds/background.dart';
 import 'package:senior_design/views/widgets/backgrounds/background_name.dart';
 
-
 class SignInView extends StatefulWidget {
   const SignInView({Key? key}) : super(key: key);
 
@@ -15,12 +14,14 @@ class SignInView extends StatefulWidget {
 class _SignInViewState extends State<SignInView> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
+  bool _passwordVisible = false; // Added for password visibility toggle
 
   @override
   void initState() {
     super.initState();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    _passwordVisible = false; // Initialize password visibility to false
   }
 
   @override
@@ -41,13 +42,12 @@ class _SignInViewState extends State<SignInView> {
           icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text('Back'), // Optionally, you can also add a title here
-        // align the title to the right of the icon
+        title: Text('Back'),
         centerTitle: false,
         titleSpacing: 0,
         elevation: 0,
-        backgroundColor: Colors.transparent, // Ensure AppBar is transparent
-        foregroundColor: Colors.black, // Set icon color
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.black,
       ),
       body: BackgroundImage(
         imagePath: BackgroundName.loginBackground,
@@ -68,7 +68,7 @@ class _SignInViewState extends State<SignInView> {
                 style: TextStyle(
                   fontSize: 32.0,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black, // Ensure text is visible on background
+                  color: Colors.black,
                 ),
               ),
               const SizedBox(height: 24.0),
@@ -77,20 +77,32 @@ class _SignInViewState extends State<SignInView> {
                 decoration: const InputDecoration(
                   labelText: 'Email Address',
                   border: OutlineInputBorder(),
-                  fillColor: Colors.white, // Adding fill color for visibility
+                  fillColor: Colors.white,
                   filled: true,
                 ),
               ),
               const SizedBox(height: 12.0),
               TextField(
                 controller: _passwordController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Password',
                   border: OutlineInputBorder(),
-                  fillColor: Colors.white, // Adding fill color for visibility
+                  fillColor: Colors.white,
                   filled: true,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      // Change the icon based on password visibility
+                      _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                    ),
+                    onPressed: () {
+                      // Update the password visibility state
+                      setState(() {
+                        _passwordVisible = !_passwordVisible;
+                      });
+                    },
+                  ),
                 ),
-                obscureText: true,
+                obscureText: !_passwordVisible, // Toggle based on _passwordVisible
               ),
               const SizedBox(height: 24.0),
               ElevatedButton(
@@ -114,7 +126,7 @@ class _SignInViewState extends State<SignInView> {
               TextButton(
                 onPressed: () {/* Forgot Password? action */},
                 child: const Text('Forgot Password?',
-                    style: TextStyle(color: Colors.white)),
+                    style: TextStyle(color: Colors.blue)),
               ),
               Spacer(flex: 1),
             ],
