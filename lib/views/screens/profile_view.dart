@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:senior_design/view_models/user_view_model.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({Key? key}) : super(key: key);
@@ -8,22 +10,11 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  // Example user profile data
-  final Map<String, dynamic> _profileData = {
-    'First Name': 'John',
-    'Last Name': 'Doe',
-    'Email Address': 'john.doe@example.com',
-    'Date of Birth': '1985-08-15',
-    'Gender': 'Male',
-    'Weight': '180 lbs',
-    'Height': '6 ft',
-    'Injury Type': 'Broken Arm',
-    'Date of Injury': '2023-01-10',
-    'Past Injuries': 'Sprained Wrist (2020)',
-  };
 
   @override
   Widget build(BuildContext context) {
+    final userViewModel = Provider.of<UserViewModel>(context);
+
     return Scaffold(
       body: ListView(
         children: [
@@ -37,7 +28,7 @@ class _ProfileViewState extends State<ProfileView> {
               ),
             ),
           ),
-          ..._profileData.entries.map((entry) {
+          ...userToMap(userViewModel).entries.map((entry) {
             return Card(
               child: ListTile(
                 title: Text(entry.key),
@@ -48,5 +39,21 @@ class _ProfileViewState extends State<ProfileView> {
         ],
       ),
     );
+  }
+
+  static Map<String, dynamic> userToMap(UserViewModel userViewModel){
+    return {
+      'First Name': userViewModel.user.firstName,
+      'Last Name': userViewModel.user.lastName,
+      'Email Address': userViewModel.user.email,
+      'Date of Birth': userViewModel.user.dateOfBirth,
+      'Gender': userViewModel.user.gender,
+      'Weight': userViewModel.user.weight,
+      'Height': userViewModel.user.height,
+      'Injury Type': userViewModel.user.injuryType,
+      'Date of Injury': userViewModel.user.dateOfInjury,
+      'Past Injuries': userViewModel.user.pastInjuries,
+      'Total Workouts': userViewModel.user.totalWorkouts
+    };
   }
 }
