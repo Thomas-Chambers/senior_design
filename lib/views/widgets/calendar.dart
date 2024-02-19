@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'dart:ui'; // Import this for ImageFilter.
 
 class CalendarWidget extends StatefulWidget {
+  const CalendarWidget({super.key});
+
   @override
   _CalendarWidgetState createState() => _CalendarWidgetState();
 }
@@ -10,9 +11,9 @@ class CalendarWidget extends StatefulWidget {
 class _CalendarWidgetState extends State<CalendarWidget> {
   // Define random workout days for the sake of this implementation
   List<DateTime> workoutDays = [
-    DateTime.now().subtract(Duration(days: 2)), // Example workout day
-    DateTime.now().subtract(Duration(days: 4)), // Another example
-    DateTime.now().add(Duration(days: 3)), // Future workout day
+    DateTime.now().subtract(const Duration(days: 2)), // Example workout day
+    DateTime.now().subtract(const Duration(days: 4)), // Another example
+    DateTime.now().add(const Duration(days: 3)), // Future workout day
   ];
 
   bool isWorkoutDay(DateTime day) {
@@ -27,7 +28,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
+      padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
       child: Align(
         alignment: Alignment.topCenter,
         child: ClipRRect(
@@ -47,7 +48,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Row(
+                  const Row(
                     children: <Widget>[
                       Icon(Icons.calendar_today, color: Colors.black), // Adjust icon color for visibility
                       SizedBox(width: 8),
@@ -61,14 +62,14 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   TableCalendar(
                     firstDay: DateTime.utc(2010, 10, 16),
                     lastDay: DateTime.utc(2030, 3, 14),
                     focusedDay: DateTime.now(),
                     calendarFormat: CalendarFormat.month,
                     startingDayOfWeek: StartingDayOfWeek.monday,
-                    headerStyle: HeaderStyle(
+                    headerStyle: const HeaderStyle(
                       formatButtonVisible: false,
                       titleCentered: true, // Ensure the title is centered
                       titleTextStyle: TextStyle(
@@ -78,10 +79,10 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                       leftChevronIcon: Icon(Icons.chevron_left, color: Colors.black),
                       rightChevronIcon: Icon(Icons.chevron_right, color: Colors.black),
                     ),
-                    daysOfWeekStyle: DaysOfWeekStyle(
+                    daysOfWeekStyle: const DaysOfWeekStyle(
                       weekendStyle: TextStyle(color: Colors.black),
                     ),
-                    calendarStyle: CalendarStyle(
+                    calendarStyle: const CalendarStyle(
                       todayDecoration: BoxDecoration(
                         color: Colors.black,
                         shape: BoxShape.circle,
@@ -108,20 +109,20 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                             ),
                             child: Text(
                               day.day.toString(),
-                              style: TextStyle(color: Colors.black),
+                              style: const TextStyle(color: Colors.black),
                             ),
                           );
                         } else if (day == DateTime.now()) {
                           return Container(
                             margin: const EdgeInsets.all(4.0),
                             alignment: Alignment.center,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Colors.black,
                               shape: BoxShape.circle,
                             ),
                             child: Text(
                               day.day.toString(),
-                              style: TextStyle(color: Colors.white),
+                              style: const TextStyle(color: Colors.white),
                             ),
                           );
                         }
@@ -132,7 +133,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                       if (isWorkoutDay(selectedDay)) {
                         // Handle workout day selection
                         ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(content: Text('Workout day selected!')));
+                            .showSnackBar(const SnackBar(content: Text('Workout day selected!')));
                       }
                     },
                   ),
