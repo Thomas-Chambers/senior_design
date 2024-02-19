@@ -20,6 +20,7 @@ class CreateAccountView extends HookWidget {
     final passwordController = useTextEditingController();
     final isPatientState = useState(true);
     final disableButton = useState(true);
+    final passwordVisible = useState(false);
 
     useEffect(() {
       void checkFields() {
@@ -49,14 +50,14 @@ class CreateAccountView extends HookWidget {
       extendBodyBehindAppBar: true, // Make body extend behind AppBar
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             userViewModel.clearUser();
             Navigator.of(context).pop();
             authViewModel.setErrorMessage("", true);
         }, // This line will handle the back navigation
         ),
-        title: Text('Back'), // Optionally, you can also add a title here
+        title: const Text('Back'), // Optionally, you can also add a title here
         // align the title to the right of the icon
         centerTitle: false,
         titleSpacing: 0,
@@ -92,13 +93,13 @@ class CreateAccountView extends HookWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: CupertinoSegmentedControl<bool>(
-                      children: {
+                      children: const {
                         true: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16.0),
+                          padding: EdgeInsets.symmetric(vertical: 16.0),
                           child: Text('Patient'),
                         ),
                         false: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16.0),
+                          padding: EdgeInsets.symmetric(vertical: 16.0),
                           child: Text('Doctor'),
                         ),
                       },
@@ -141,11 +142,21 @@ class CreateAccountView extends HookWidget {
                   const SizedBox(height: 12.0),
                   TextField(
                     controller: passwordController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Password',
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          // Change the icon based on password visibility
+                          passwordVisible.value ? Icons.visibility : Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          // Update the password visibility state
+                          passwordVisible.value = !passwordVisible.value;
+                        },
+                      ),
                     ),
-                    obscureText: true,
+                    obscureText: !passwordVisible.value,
                   ),
                   const SizedBox(height: 15.0),
                   if(authViewModel.errorMessage.isNotEmpty && !authViewModel.isSignIn)

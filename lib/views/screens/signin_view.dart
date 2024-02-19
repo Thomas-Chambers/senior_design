@@ -16,6 +16,7 @@ class SignInView extends HookWidget {
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
     final disableButton = useState(true);
+    final passwordVisible = useState(false);
 
     useEffect(() {
       void checkFields() {
@@ -39,19 +40,18 @@ class SignInView extends HookWidget {
       extendBodyBehindAppBar: true, // Make body extend behind AppBar
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: (){
             Navigator.of(context).pop();
             authViewModel.setErrorMessage("", true);
           },
         ),
-        title: Text('Back'), // Optionally, you can also add a title here
-        // align the title to the right of the icon
+        title: const Text('Back'),
         centerTitle: false,
         titleSpacing: 0,
         elevation: 0,
-        backgroundColor: Colors.transparent, // Ensure AppBar is transparent
-        foregroundColor: Colors.black, // Set icon color
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.black,
       ),
       body: BackgroundImage(
         imagePath: BackgroundName.loginBackground,
@@ -65,14 +65,14 @@ class SignInView extends HookWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Spacer(),
+              const Spacer(),
               const Text(
                 'Sign in to Account',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 32.0,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black, // Ensure text is visible on background
+                  color: Colors.black,
                 ),
               ),
               const SizedBox(height: 24.0),
@@ -81,20 +81,30 @@ class SignInView extends HookWidget {
                 decoration: const InputDecoration(
                   labelText: 'Email Address',
                   border: OutlineInputBorder(),
-                  fillColor: Colors.white, // Adding fill color for visibility
+                  fillColor: Colors.white,
                   filled: true,
                 ),
               ),
               const SizedBox(height: 12.0),
               TextField(
                 controller: passwordController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Password',
-                  border: OutlineInputBorder(),
-                  fillColor: Colors.white, // Adding fill color for visibility
+                  border: const OutlineInputBorder(),
+                  fillColor: Colors.white,
                   filled: true,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      // Change the icon based on password visibility
+                      passwordVisible.value ? Icons.visibility : Icons.visibility_off,
+                    ),
+                    onPressed: () {
+                      // Update the password visibility state
+                      passwordVisible.value = !passwordVisible.value;
+                    },
+                  ),
                 ),
-                obscureText: true,
+                obscureText: !passwordVisible.value, // Toggle based on _passwordVisible
               ),
               const SizedBox(height: 24.0),
               ElevatedButton(
@@ -137,7 +147,7 @@ class SignInView extends HookWidget {
                 child: const Text('Forgot Password?',
                     style: TextStyle(color: Colors.blue)),
               ),
-              Spacer(flex: 1),
+              const Spacer(flex: 1),
             ],
           ),
         ),
