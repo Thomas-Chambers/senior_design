@@ -143,6 +143,7 @@ class UserViewModel with ChangeNotifier {
     _user.injuryType = injuryType;
     _user.dateOfInjury = dateOfInjury;
     _user.pastInjuries = pastInjuries;
+    _user.totalWorkouts = 0;
     _user.completedSignUp = true;
     notifyListeners();
   }
@@ -167,5 +168,9 @@ class UserViewModel with ChangeNotifier {
   Future<void> getUserFromFireStore(String email) async {
     User user = await _fireStoreRepository.fetchUser(email);
     setUser(user);
+  }
+
+  Future<List<Map<String, dynamic>>> fetchWorkoutData(int numberOfWorkouts) async{
+    return await _fireStoreRepository.fetchWorkoutData(user, numberOfWorkouts);
   }
 }
