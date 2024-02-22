@@ -7,7 +7,6 @@ import 'package:senior_design/views/screens/signin_view.dart';
 import 'package:flutter/material.dart';
 import 'package:senior_design/views/screens/welcome_view.dart';
 
-import '../../views/screens/workout_view.dart';
 import '../../views/screens/workoutdetails_view.dart';
 
 class Routes {

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:senior_design/views/screens/workoutdetails_view.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../screens/workout_view.dart';
-
 class CalendarWidget extends StatefulWidget {
   const CalendarWidget({super.key});
 
